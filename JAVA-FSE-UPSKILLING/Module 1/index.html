@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Local Community Event Portal</title>
+
+ <!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+<!-- Leaflet JS (Required to make the map work) -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<style>
+  /* Add this to define height for the map */
+  #map {
+    height: 400px;
+    width: 100%;
+    margin-top: 20px;
+    border-radius: 10px;
+  }
+
+  /* (Your existing styles continue here...) */
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #83a4d4, #b6fbff);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  /* ... rest of your CSS remains unchanged */
+</style>
+
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #83a4d4, #b6fbff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 95%;
+      max-width: 1000px;
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      text-align: center;
+    }
+
+    nav {
+      margin-bottom: 20px;
+    }
+
+    nav a {
+      margin: 12px;
+      text-decoration: none;
+      color: #0077cc;
+      font-weight: bold;
+      font-size: 1.1rem;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: #005fa3;
+      text-decoration: underline;
+    }
+
+    #welcomeBanner {
+      background-color: #0077cc;
+      color: white;
+      padding: 15px;
+      border-radius: 10px;
+      margin: 20px 0;
+      font-size: 1.2rem;
+    }
+
+    h2 {
+      color: #333;
+    }
+
+    .event-img {
+      border: 2px solid #ccc;
+      width: 100px;
+      height: 100px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    table {
+      margin: 20px auto;
+      border-collapse: collapse;
+    }
+
+    td, th {
+      padding: 10px;
+    }
+
+    form input, form select, form textarea, form button {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      padding: 12px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    form button {
+      background-color: #0077cc;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    form button:hover {
+      background-color: #005fa3;
+    }
+
+    video {
+      margin-top: 20px;
+      border-radius: 10px;
+    }
+
+    .box {
+      width: 150px;
+      height: 150px;
+      background-color: skyblue;
+      margin: 20px auto;
+      line-height: 150px;
+      color: white;
+      font-weight: bold;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    #feeDisplay {
+      font-weight: bold;
+      color: green;
+    }
+
+    #locationInfo {
+      margin-top: 10px;
+      font-style: italic;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#events">Events</a>
+      <a href="#contact">Contact</a>
+      <a href="help.html" target="_blank">Help</a>
+    </nav>
+
+    <div id="welcomeBanner">
+      Welcome! <span style="color: red; font-weight: bold;">Special Offer!</span>
+    </div>
+
+    <section id="home">
+      <h2>🏡 Home</h2>
+      <p>Welcome to the Local Community Event Portal! Stay connected with the most happening local events around you.</p>
+    </section>
+
+    <section id="events">
+      <h2>🎉 Events</h2>
+
+      <table border="1">
+        <caption style="margin-bottom: 10px; font-weight: bold;">Community Event Highlights</caption>
+        <tr>
+          <td><img src="https://png.pngtree.com/png-vector/20190130/ourmid/pngtree-family-eating-mooncakes-together-at-mid-autumn-festival-festivalfamilypicniceating-moon-cake-png-image_583364.jpg" alt="Picnic Event" title="Picnic Event" class="event-img"></td>
+          <td><img src="https://png.pngtree.com/png-clipart/20190223/ourmid/pngtree-silhouette-elements-of-characters-in-black-concert-png-image_710918.jpg" alt="Music Event" title="Music Event" class="event-img"></td>
+          <td><img src="https://png.pngtree.com/png-clipart/20210829/original/pngtree-volunteer-garbage-cleanup-concept-flat-illustration-png-image_6684653.jpg" alt="Beach Blitz" title="Beach Blitz" class="event-img"></td>
+        </tr>
+        <tr>
+          <td><img src="https://banner2.cleanpng.com/20240130/cpq/transparent-group-of-people-colorful-people-in-circle-making-gesture-1710891340627.webp" alt="Local colors fest Event " title="Local Colors Event" class="event-img"></td>
+          <td><img src="https://www.vhv.rs/dpng/d/516-5166159_zumba-dancers-hd-png-download.png" alt="Zumba Event " title="Zumba Event " class="event-img"></td>
+          <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjRRBoZ4Tatpy2AUmSKggZuS8-FKM0B_RP_w&s" alt="One Commmunity Event " title="One Community Event" class="event-img"></td>
+        </tr>
+      </table>
+
+      <h3>📝 Register for an Event</h3>
+      <form onsubmit="showConfirmation(); return false;">
+        <input type="text" placeholder="Your Name" required autofocus>
+        <input type="email" placeholder="Your Email" required>
+        <input type="date" required>
+        <select id="eventType" onchange="savePreference()" required>
+          <option value="">Select Event Type</option>
+          <option value="Picnic">Picnic Event</option>
+          <option value="music">Music Event</option>
+<option value="Clean Blitz">Clean Blitz Event</option>
+<option value="Local Colors fest">Local Colors Event</option>
+<option value="Zumba Session">Zumba Session</option>
+<option value="One Community Event">One Community Event</option>
+        </select>
+        <textarea placeholder="Message" required></textarea>
+        <input type="text" id="phone" placeholder="Phone Number" onblur="validatePhone()">
+        <div id="feeDisplay"></div>
+        <textarea id="feedback" onkeyup="countChars()" placeholder="Your feedback"></textarea>
+        <p>Characters: <span id="charCount">0</span></p>
+        <button type="submit">Register</button>
+        <output id="confirmationMsg"></output>
+      </form>
+
+      <h3>🎬Local Event Spotlight</h3>
+      <video width="560" height="315" controls autoplay muted oncanplay="readyMsg()">
+        <source src="video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <p id="videoStatus"></p>
+
+      <button onclick="findNearby()">📍 Find Nearby Events</button>
+      <p id="locationInfo"></p>
+
+      <button onclick="showMap()">📍 Show My Location on Map</button>
+      <div id="map"></div>
+    </section>
+
+    <section id="contact">
+      <h2>📬 Contact Us</h2>
+      <p>Email: contact@communityevents.com</p>
+    </section>
+
+    <h3>🧪 Debugging Section</h3>
+    <div class="box" id="debugBox">Click Me</div>
+    <button onclick="triggerError()">⚠️ Trigger Error</button>
+  </div>
+
+  <script>
+    console.log("Page Loaded");
+
+    document.getElementById("debugBox").addEventListener("click", function () {
+      console.log("Box clicked");
+      this.style.backgroundColor = getRandomColor();
+    });
+
+    function getRandomColor() {
+      const colors = ["red", "green", "blue", "orange"];
+      const index = Math.floor(Math.random() * colors.length);
+      return colors[index];
+    }
+
+    function triggerError() {
+      let num = undefined;
+      console.log(num.toUpperCase()); // Intentional error
+    }
+
+    function showConfirmation() {
+      document.getElementById("confirmationMsg").value = "Thank you for registering!";
+    }
+
+    function validatePhone() {
+      const phone = document.getElementById('phone').value;
+      if (!/^\d{10}$/.test(phone)) {
+        alert("Invalid phone number. Please enter a 10-digit number.");
+      }
+    }
+
+    function countChars() {
+      const count = document.getElementById("feedback").value.length;
+      document.getElementById("charCount").innerText = count;
+    }
+
+    function readyMsg() {
+      document.getElementById('videoStatus').innerText = "🎬 Video ready to play!";
+    }
+
+    window.onbeforeunload = function() {
+      return "You have unsaved changes. Are you sure you want to leave?";
+    }
+
+    function savePreference() {
+      const selected = document.getElementById("eventType").value;
+      localStorage.setItem("eventType", selected);
+    }
+
+    window.onload = function () {
+      const type = localStorage.getItem("eventType");
+      if (type) document.getElementById("eventType").value = type;
+    }
+
+   function findNearby() {
+      if (!navigator.geolocation) {
+        document.getElementById("locationInfo").innerText = "Geolocation not supported.";
+        return;
+      }
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const coords = pos.coords;
+          document.getElementById("locationInfo").innerText =
+            `Latitude: ${coords.latitude}, Longitude: ${coords.longitude}`;
+        },
+        (err) => {
+          document.getElementById("locationInfo").innerText = "Error: " + err.message;
+        },
+        { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+      );
+    }
+
+    function showMap() {
+      if (!navigator.geolocation) {
+        alert("Geolocation is not supported by your browser.");
+        return;
+      }
+
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+
+          const map = L.map('map').setView([lat, lon], 15);
+
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+          }).addTo(map);
+
+          L.marker([lat, lon])
+            .addTo(map)
+            .bindPopup("You are here!")
+            .openPopup();
+        },
+        (error) => {
+          alert("Unable to retrieve your location: " + error.message);
+        }
+      );
+    }
+  </script>
+</body>
+</html>
